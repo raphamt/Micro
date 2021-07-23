@@ -76,7 +76,7 @@ init_wait
 atualiza_leds 
         PUSH {R1-R4}
         
-;porta N e F e testa o led 3
+;porta N e F e testa o led 3 e 4
         LDR R1, = GPIO_PORTF_DATA_MASKED_R 
         LDR R2, = GPIO_PORTN_DATA_MASKED_R 
         AND R3, R0,#0001b
