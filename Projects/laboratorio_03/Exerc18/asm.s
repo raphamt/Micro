@@ -39,7 +39,7 @@ init
             
             LDR R0, =SYSCTL_PRGPIO_R 
 
-; le o estado, verifica o clock e se n„o ele manda esperar
+; le o estado, verifica o clock e se n√£o ele manda esperar
 init_wait	
           LDR R2, [R0]                  
           TEQ R1, R2                     
@@ -54,7 +54,7 @@ init_wait
           ORR R1, R2                  
           STR R1, [R0]
 
-;le o estado antigo, ativa a funÁ„o digital e escreve o estado novo
+;le o estado antigo, ativa a fun√ß√£o digital e escreve o estado novo
           LDR R0, =GPIO_PORTN_DEN_R
           LDR R1, [R0]                  
           ORR R1, R2                  
@@ -71,7 +71,7 @@ init_wait
           STR R1, [R0]        
           LDR R0, =GPIO_PORTF_DEN_R
 
-;le o estado antigo, ativa a funÁ„o digital e escreve o estado novo
+;le o estado antigo, ativa a fun√ß√£o digital e escreve o estado novo
           LDR R1, [R0]                 
           ORR R1, R2                  
           STR R1, [R0]                  
@@ -85,7 +85,7 @@ init_wait
           BIC R1, R2   
           STR R1, [R0]
           
-;ativa a funÁ„o digital
+;ativa a fun√ß√£o digital
           LDR R0, =GPIO_PORTJ_DEN_R
           LDR R1, [R0]
           ORR R1, R2 
@@ -99,7 +99,7 @@ init_wait
 
           BX LR
 
-;altera os leds com a nova configuraÁ„o
+;altera os leds com a nova configura√ß√£o
 atualiza_leds 
         PUSH {R1-R4}
         
@@ -128,7 +128,7 @@ atualiza_leds
         POP {R1-R4}
         BX LR
 
-;cria uma funÁ„o debounce para evitar histerese
+;cria uma fun√ß√£o debounce para evitar histerese
 atraso_debounce
      PUSH {R0}
      MOVT R0, #0x0005 
@@ -158,7 +158,7 @@ loop
         LDR R2, [R7,#1100b] 
         MOVS R3,R2
 
-;controle dos botıes
+;controle dos bot√µes
 notpressed_state
         MOVS R2, R3 
         BL atraso_debounce
