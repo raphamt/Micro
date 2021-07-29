@@ -40,7 +40,7 @@ GPIO_ICR                EQU     0x041C
 GPIO_PUR                EQU     0x0510
 GPIO_DEN                EQU     0x051C
 
-;declaração do delay e dos leds  
+;declaraÃ§Ã£o do delay e dos leds  
 DELAY                    EQU     0x005F
 LEDN_1                   EQU     00010b
 LEDN_2                   EQU     00001b
@@ -48,11 +48,11 @@ LEDF_2                   EQU     00001b
 LEDF_1                   EQU     10000b
 
 
-; ROTINAS DE SERVIÇO DE INTERRUPÇÃO
+; ROTINAS DE SERVIÃ‡O DE INTERRUPÃ‡ÃƒO
 
 ; GPIOJ_Handler: Interrupt Service Routine for port GPIO J
 ; Utiliza R11 para se comunicar com o programa principal
-;alterado para verificar se a interrupção é na porta 10b ou 01b
+;alterado para verificar se a interrupÃ§Ã£o Ã© na porta 10b ou 01b
 GPIOJ_Handler:
         PUSH {R3}
         MOV R0, #00000011b ; ACK do bit 0
@@ -82,21 +82,21 @@ main    MOV R0, #(PORTN_BIT)
 
 ;habilita os bits da porta N
         LDR R0, =GPIO_PORTN_BASE                       
-        MOV R1, #000000011b        ; bits 0 e 1 como saída    
+        MOV R1, #000000011b        ; bits 0 e 1 como saÃ­da    
         BL GPIO_digital_output
         BL Escrita_em_baixa
 
         LDR R0, =GPIO_PORTF_BASE                        
-        MOV R1, #000010001b        ; bits 0 e 4 como saída                  
+        MOV R1, #000010001b        ; bits 0 e 4 como saÃ­da                  
         BL GPIO_digital_output
         BL Escrita_em_baixa
 
         LDR R0, =GPIO_PORTJ_BASE                    
-        MOV R1, #000000011b        ; bits 0 e 4 como saída                  
+        MOV R1, #000000011b        ; bits 0 e 4 como saÃ­da                  
         BL GPIO_digital_input
         BL Escrita_em_baixa
         
-        BL Button_int_conf         ; habilita interrupção do botão SW1
+        BL Button_int_conf         ; habilita interrupÃ§Ã£o do botÃ£o SW1
 ;contador
         MOV R3, #0                                   
 
@@ -107,9 +107,9 @@ loop:
 
 ; SUB-ROTINAS
 
-; LED_write: escreve um valor binário nos LEDs D1 a D4 do kit
+; LED_write: escreve um valor binÃ¡rio nos LEDs D1 a D4 do kit
 ; R0 = valor a ser escrito nos LEDs (bit 3 a bit 0)
-; Destrói: R1, R2, R3 e R4
+; DestrÃ³i: R1, R2, R3 e R4
 
 
 ;habilita o GPIO da porta 0, coloca oq R2 aponta no R1
@@ -126,32 +126,32 @@ check
         BX LR                                    
 
 
-; GPIO_digital_output: habilita saídas digitais no port de GPIO desejado
-; R0 = endereço base do port desejado
-; R1 = padrão de bits (1) a serem habilitados como saídas digitais
-; Destrói: R2
+; GPIO_digital_output: habilita saÃ­das digitais no port de GPIO desejado
+; R0 = endereÃ§o base do port desejado
+; R1 = padrÃ£o de bits (1) a serem habilitados como saÃ­das digitais
+; DestrÃ³i: R2
 GPIO_digital_output:
 	LDR R2, [R0, #GPIO_DIR]
-	ORR R2, R1 ; configura bits de saída
+	ORR R2, R1 ; configura bits de saÃ­da
 	STR R2, [R0, #GPIO_DIR]
 
 	LDR R2, [R0, #GPIO_DEN]
-	ORR R2, R1 ; habilita função digital
+	ORR R2, R1 ; habilita funÃ§Ã£o digital
 	STR R2, [R0, #GPIO_DEN]
         
         BX LR
 
 ; GPIO_digital_input: habilita entradas digitais no port de GPIO desejado
-; R0 = endereço base do port desejado
-; R1 = padrão de bits (1) a serem habilitados como entradas digitais
-; Destrói: R2
+; R0 = endereÃ§o base do port desejado
+; R1 = padrÃ£o de bits (1) a serem habilitados como entradas digitais
+; DestrÃ³i: R2
 GPIO_digital_input:
 	LDR R2, [R0, #GPIO_DIR]
 	BIC R2, R1 ; configura bits de entrada
 	STR R2, [R0, #GPIO_DIR]
 
 	LDR R2, [R0, #GPIO_DEN]
-	ORR R2, R1 ; habilita função digital
+	ORR R2, R1 ; habilita funÃ§Ã£o digital
 	STR R2, [R0, #GPIO_DEN]
 
 	LDR R2, [R0, #GPIO_PUR]
@@ -160,20 +160,20 @@ GPIO_digital_input:
 
         BX LR
 
-; GPIO_write: escreve nas saídas do port de GPIO desejado
-; R0 = endereço base do port desejado
-; R1 = máscara de bits a serem acessados
+; GPIO_write: escreve nas saÃ­das do port de GPIO desejado
+; R0 = endereÃ§o base do port desejado
+; R1 = mÃ¡scara de bits a serem acessados
 ; R2 = bits a serem escritos
 GPIO_write:
-        STR R2, [R0, R1, LSL #2] ; escreve bits com máscara de acesso
+        STR R2, [R0, R1, LSL #2] ; escreve bits com mÃ¡scara de acesso
         BX LR
 
-; GPIO_read: lê as entradas do port de GPIO desejado
-; R0 = endereço base do port desejado
-; R1 = máscara de bits a serem acessados
+; GPIO_read: lÃª as entradas do port de GPIO desejado
+; R0 = endereÃ§o base do port desejado
+; R1 = mÃ¡scara de bits a serem acessados
 ; R2 = bits lidos
 GPIO_read:
-        LDR R2, [R0, R1, LSL #2] ; lê bits com máscara de acesso
+        LDR R2, [R0, R1, LSL #2] ; lÃª bits com mÃ¡scara de acesso
         BX LR
 
 Escrita_em_baixa:
@@ -185,7 +185,7 @@ Escrita_em_baixa:
 
 ; SW_delay: atraso de tempo por software
 ; R0 = valor do atraso
-; Destrói: R0
+; DestrÃ³i: R0
 Delay:
         PUSH {R0}
         MOVT R0, #(DELAY)
@@ -225,34 +225,34 @@ LED_write:
 
 
 
-; Button_int_conf: configura interrupções do botão SW1 do kit
-; Destrói: R0, R1 e R2
+; Button_int_conf: configura interrupÃ§Ãµes do botÃ£o SW1 do kit
+; DestrÃ³i: R0, R1 e R2
 Button_int_conf:
         MOV R2, #000000011b ; bit do PJ0
         LDR R1, =GPIO_PORTJ_BASE
         
         LDR R0, [R1, #GPIO_IM]
-        BIC R0, R0, R2 ; desabilita interrupções
+        BIC R0, R0, R2 ; desabilita interrupÃ§Ãµes
         STR R0, [R1, #GPIO_IM]
         
         LDR R0, [R1, #GPIO_IS]
-        BIC R0, R0, R2 ; interrupção por transição
+        BIC R0, R0, R2 ; interrupÃ§Ã£o por transiÃ§Ã£o
         STR R0, [R1, #GPIO_IS]
         
         LDR R0, [R1, #GPIO_IBE]
-        BIC R0, R0, R2 ; uma transição apenas
+        BIC R0, R0, R2 ; uma transiÃ§Ã£o apenas
         STR R0, [R1, #GPIO_IBE]
         
         LDR R0, [R1, #GPIO_IEV]
-        BIC R0, R0, R2 ; transição de descida
+        BIC R0, R0, R2 ; transiÃ§Ã£o de descida
         STR R0, [R1, #GPIO_IEV]
         
         LDR R0, [R1, #GPIO_ICR]
-        ORR R0, R0, R2 ; limpeza de pendências
+        ORR R0, R0, R2 ; limpeza de pendÃªncias
         STR R0, [R1, #GPIO_ICR]
         
         LDR R0, [R1, #GPIO_IM]
-        ORR R0, R0, R2 ; habilita interrupções no port GPIO J
+        ORR R0, R0, R2 ; habilita interrupÃ§Ãµes no port GPIO J
         STR R0, [R1, #GPIO_IM]
 
         MOV R2, #0xE0000000 ; prioridade mais baixa para a IRQ51
@@ -263,7 +263,7 @@ Button_int_conf:
         STR R0, [R1, #NVIC_PRI12]
 
         MOV R2, #10000000000000000000b ; bit 19 = IRQ51
-        MOV R0, R2 ; limpa pendências da IRQ51 no NVIC
+        MOV R0, R2 ; limpa pendÃªncias da IRQ51 no NVIC
         STR R0, [R1, #NVIC_UNPEND1]
 
         LDR R0, [R1, #NVIC_EN1]
