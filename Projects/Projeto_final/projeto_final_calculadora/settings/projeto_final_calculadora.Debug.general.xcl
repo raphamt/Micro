@@ -1,0 +1,15 @@
+"C:\Program Files\IAR Systems\Embedded Workbench 9.0_2\arm\bin\armPROC.dll" 
+
+"C:\Program Files\IAR Systems\Embedded Workbench 9.0_2\arm\bin\armLMIFTDI.dll" 
+
+"C:\Users\raphi\OneDrive\Área de Trabalho\Materias 20_01\Micro\lab4\TM4C129E_SM_IAR9-main\Projects\projeto_final_calculadora\Debug\Exe\projeto_final_calculadora.out" 
+
+--plugin="C:\Program Files\IAR Systems\Embedded Workbench 9.0_2\arm\bin\armbat.dll" 
+
+--device_macro="C:\Program Files\IAR Systems\Embedded Workbench 9.0_2\arm\config\debugger\TexasInstruments\TM4C129.dmac" 
+
+--flash_loader="C:\Program Files\IAR Systems\Embedded Workbench 9.0_2\arm\config\flashloader\TexasInstruments\FlashTC4_NC.board" 
+
+
+
+
